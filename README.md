@@ -16,4 +16,4 @@ Result:
 
 ## 2] Track planes
 
-<img src="track_planes.jpg">
+<img src="tracked_planes.jpg">
