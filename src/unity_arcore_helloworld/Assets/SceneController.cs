@@ -6,6 +6,7 @@ public class SceneController : MonoBehaviour {
 
     public GameObject trackedPlanePrefab;
     public Camera firstPersonCamera;
+    public ScoreboardController scoreboard;
 
     // Use this for initialization
     void Start () {
@@ -62,6 +63,7 @@ public class SceneController : MonoBehaviour {
         if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
         {
             SetSelectedPlane(hit.Trackable as TrackedPlane);
+            // Add to the end of SetSelectedPlane.
         }
     }
 
@@ -69,6 +71,7 @@ public class SceneController : MonoBehaviour {
     void SetSelectedPlane(TrackedPlane selectedPlane)
     {
         Debug.Log("Selected plane centered at " + selectedPlane.CenterPose.position);
+        scoreboard.SetSelectedPlane(selectedPlane);
     }
 
     void ProcessNewPlanes()

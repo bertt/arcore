@@ -21,3 +21,7 @@ Result:
 ## 3] Select plane
 
 <img src="select_plane.jpg">
+
+## 4] Add scoreboard
+
+<img src="scoreboard.jpg">
