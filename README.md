@@ -17,3 +17,7 @@ Result:
 ## 2] Track planes
 
 <img src="tracked_planes.jpg">
+
+## 3] Select plane
+
+<img src="select_plane.jpg">

@@ -1,13 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using GoogleARCore;
 
 public class SceneController : MonoBehaviour {
 
     public GameObject trackedPlanePrefab;
-	// Use this for initialization
-	void Start () {
+    public Camera firstPersonCamera;
+
+    // Use this for initialization
+    void Start () {
         QuitOnConnectionErrors();
     }
 	
@@ -23,6 +24,8 @@ public class SceneController : MonoBehaviour {
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
         ProcessNewPlanes();
+
+        ProcessTouches();
     }
 
     void QuitOnConnectionErrors()
@@ -40,6 +43,32 @@ public class SceneController : MonoBehaviour {
             StartCoroutine(CodelabUtils.ToastAndExit(
               "ARCore encountered a problem connecting. Please restart the app.", 5));
         }
+    }
+
+    void ProcessTouches()
+    {
+        Touch touch;
+        if (Input.touchCount != 1 ||
+            (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+        {
+            return;
+        }
+
+        TrackableHit hit;
+        TrackableHitFlags raycastFilter =
+            TrackableHitFlags.PlaneWithinBounds |
+            TrackableHitFlags.PlaneWithinPolygon;
+
+        if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
+        {
+            SetSelectedPlane(hit.Trackable as TrackedPlane);
+        }
+    }
+
+
+    void SetSelectedPlane(TrackedPlane selectedPlane)
+    {
+        Debug.Log("Selected plane centered at " + selectedPlane.CenterPose.position);
     }
 
     void ProcessNewPlanes()
